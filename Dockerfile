@@ -30,4 +30,9 @@ RUN go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt && \
 RUN git clone https://github.com/bluebrown/dotfiles.git  ~/dotfiles && \
     /bin/bash -c "source ~/dotfiles/fiddle.script"
 
+# Colors and italics for tmux
+COPY xterm-256color-italic.terminfo /root
+RUN tic /root/xterm-256color-italic.terminfo
+ENV TERM=xterm-256color-italic
+
 EXPOSE 22
