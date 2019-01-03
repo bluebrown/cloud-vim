@@ -30,5 +30,4 @@ RUN go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt && \
 RUN git clone https://github.com/bluebrown/dotfiles.git  ~/dotfiles && \
     /bin/bash -c "source ~/dotfiles/fiddle.script"
 
-
 EXPOSE 22
