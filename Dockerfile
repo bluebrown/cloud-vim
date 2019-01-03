@@ -1,13 +1,15 @@
 FROM golang:1.11.1 as builder
+
+# Set language enviroment, requierd for tmux
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 
-# Dependencies
-RUN apt update -y && apt install task vim-nox openssh-server -y && \
+# Install Tools
+RUN apt update -y && apt install task zsh tmux vim-nox openssh-server -y && \
      curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
-# Go Tools
+# Install go-tools required for vim-go
 RUN go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt && \
     go get -u -v github.com/derekparker/delve/cmd/dlv && \
     go get -u -v github.com/kisielk/errcheck && \
@@ -28,13 +30,14 @@ RUN go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt && \
     go get -u -v github.com/fatih/motion && \
     go get -u -v github.com/koron/iferr
 
-# Cofiguration
+# Fetch and source dotfiles
 RUN git clone https://github.com/bluebrown/dotfiles.git  ~/dotfiles && \
     /bin/bash -c "source ~/dotfiles/fiddle.script"
 
-# Colors and italics for tmux
+# Enable advanced colors and italic fonts
 COPY xterm-256color-italic.terminfo /root
 RUN tic /root/xterm-256color-italic.terminfo
 ENV TERM=xterm-256color-italic
 
+# Expose port
 EXPOSE 22
