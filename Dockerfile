@@ -28,8 +28,7 @@ RUN go get -u -v github.com/klauspost/asmfmt/cmd/asmfmt && \
 
 # Cofiguration
 RUN git clone https://github.com/bluebrown/dotfiles.git  ~/dotfiles && \
-    echo "source ~/dotfiles/bashrc" >> ~/.bashrc && \
-    echo "source ~/.bashrc" >> ~/.bash_profile && \
-    echo "source ~/dotfiles/vimrc" >> ~/.vim/vimrc
+    /bin/bash -c "source ~/dotfiles/fiddle.script"
+
 
 EXPOSE 22
