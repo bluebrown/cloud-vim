@@ -36,3 +36,6 @@ RUN tic /root/xterm-256color-italic.terminfo
 ENV TERM=xterm-256color-italic
 
 EXPOSE 22
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
