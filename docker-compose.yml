@@ -1,0 +1,10 @@
+version: "3.4"
+
+services:
+  vim:
+    build: .
+    image: bluebrown/vim
+    ports:
+      - "80:80"
+    volumes:
+      - ./bin:/go/bin
