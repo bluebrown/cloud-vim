@@ -51,7 +51,6 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
       "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable""" && \
     apt update && apt install -y docker-ce
 
-
 # Install common tools
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
@@ -70,11 +69,11 @@ RUN chsh -s /usr/bin/zsh && \
 
 # Fetch and source personal dotfiles
 RUN git clone https://github.com/bluebrown/dotfiles.git  ~/dotfiles && \
-    /bin/bash -c "source ~/dotfiles/fiddle.sh"
-
+    /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
+    mv ~/dotfiles/gitconfig ~/.gitconfig
+    
 # Set the workdir to quick pull go repos
 WORKDIR /go/src/github.com/bluebrown/
 
 # Expose port
 EXPOSE 22
-
