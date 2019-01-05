@@ -2,6 +2,14 @@
 
 IDE style VIM configuration in a docker container with built-in docker engine and ssh server.
 
+The purpose of this project is to provide a high customable IDE with low requirements. It can be used in different context, to enable quick coding sessions no matter where you are. 
+For example one could deploy this image on a personal server/cluster and then use the pre configured ssh server, to start a remote session or pair coding. A web frontend solution is also possible.
+Anohter use case could be, to pull this image locally and use it as IDE, without installing one locally.
+Sometimes it can also be usefull to pull this image into a playground, in the web. 
+
+It is as easy as spinning a container up, ssh into it, clone a git repo, edit some code and commit. Afterwards the whole container can get thrown away as the code persists in your repository.
+
+
 ## Getting Started
 You can pull the image or clone the repo
 ```
