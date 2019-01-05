@@ -2,6 +2,8 @@
 
 IDE style VIM configuration in a docker container with built-in docker engine and ssh server.
 
+![alt text](https://www.tintri.com/sites/default/files/paragraph-images/Tintri-containers-support-blog.jpg)
+
 The purpose of this project is to provide a high customable IDE with low requirements. It can be used in different context, to enable quick coding sessions no matter where you are. 
 For example one could deploy this image on a personal server/cluster and then use the pre configured ssh server, to start a remote session or pair coding. A web frontend solution is also possible.
 Anohter use case could be, to pull this image locally and use it as IDE, without installing one locally.
