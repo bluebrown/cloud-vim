@@ -1,0 +1,9 @@
+version: "3.4"
+
+services:
+  ide:
+    image: bluebrown/cloud-vim
+    volumes:
+      - ./workspace:/go/src/github.com/bluebrown/
+    ports:
+      - 9000:9000
