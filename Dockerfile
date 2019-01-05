@@ -55,6 +55,7 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
      apt install -y \
+      golang-glide \
       openssh-server \
       task \
       tmux \
@@ -75,8 +76,8 @@ COPY ./dotfiles /root/dotfiles
 # Setup
 RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
      mv ~/dotfiles/gitconfig ~/.gitconfig &&\
-     vim -c 'PlugInstall'\
-         -c 'qa'
+     vim -c 'PlugInstall --sync' \
+         -c 'qa!'
 
 # Set the workdir to quick pull go repos
 WORKDIR /go/src/github.com/bluebrown/
