@@ -83,3 +83,5 @@ WORKDIR /go/src/github.com/bluebrown/
 
 # Expose port
 EXPOSE 22
+
+CMD ["zsh"]
