@@ -67,14 +67,16 @@ RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
-# Setup dotfiles
-RUN git clone https://github.com/bluebrown/dotfiles.git  ~/dotfiles && \
-    /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
-     mv ~/dotfiles/gitconfig ~/.gitconfig
 
-# Install vim plugins
-RUN vim -c 'PlugInstall'\
-        -c 'qa'
+# Copy the configuration files
+# Remember to check for updates in git submodule
+COPY ./dotfiles /root/dotfiles
+
+# Setup
+RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
+     mv ~/dotfiles/gitconfig ~/.gitconfig &&\
+     vim -c 'PlugInstall'\
+         -c 'qa'
 
 # Set the workdir to quick pull go repos
 WORKDIR /go/src/github.com/bluebrown/
