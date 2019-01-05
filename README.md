@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 If you want to use this image locally you need to have docker installed. Otherwise you need a cloud provider or a server with docker engine to invoke your service at all times remotely.
 
-#### No Prequisites Solution 
+### No Prequisites Solution 
 
 You can simply use something like play-with-docker to pull the image and spin up a quick throw-away IDE without any prequisites other than a web browser with internet connection.
 ```
