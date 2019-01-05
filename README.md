@@ -12,7 +12,7 @@ If you want to use this image locally you need to have docker installed. Otherwi
 
 #### No Prequisites Solution 
 
-Otherwise you can simple use something like play-with-docker to pull the image and spin up a quick throw-away IDE.
+You can simply use something like play-with-docker to pull the image and spin up a quick throw-away IDE without any prequisites other than a web browser with internet connection.
 ```
 Give examples
 ```
