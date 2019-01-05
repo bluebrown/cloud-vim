@@ -1,4 +1,4 @@
-# Cloud ViM
+# Cloud VIM
 
 IDE style VIM configuration in a docker container with built-in docker engine and ssh server.
 
@@ -62,7 +62,7 @@ Add additional notes about how to deploy this on a live system
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Nico Braun** - *Initial work* - [bluebrown](https://github.com/bluebrown)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
