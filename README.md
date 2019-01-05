@@ -3,8 +3,11 @@
 IDE style VIM configuration in a docker container with built-in docker engine and ssh server.
 
 ## Getting Started
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+You can pull the image or clone the repo
+```
+docker pull bluebrown/cloud-vim
+git clone https://github.com/bluebrown/cloud-vim.git
+```
 
 ### Prerequisites
 
@@ -12,53 +15,28 @@ If you want to use this image locally you need to have docker installed. Otherwi
 
 ### No Prequisites Solution 
 
-You can simply use something like play-with-docker to pull the image and spin up a quick throw-away IDE without any prequisites other than a web browser with internet connection.
-```
-Give examples
-```
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+You can simply use something like https://labs.play-with-docker.com/ to pull the image and spin up a quick throw-away IDE without any prequisites other than a web browser with internet connection.
 
 ```
-Give the example
+docker pull bluebrown/cloud-vim
+docker run -ti bluebrown/cloud-vim /bin/zsh
 ```
 
-And repeat
+## Development
+To build this image youself with own configurations pull this repo
+```
+git clone https://github.com/bluebrown/cloud-vim.git
+```
+Within the dockerfile is a repository url specified which points to a collection of dotfiles.
+You might fork and change these and update the url in the dockerfile https://github.com/bluebrown/dotfiles
 
 ```
-until finished
+git clone https://github.com/<yourname>/dotfiles.git
 ```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
+After changing the files to your need you can build you own image
 ```
-Give an example
+docker build -t <yourname>/cloud-vim .
 ```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
 
 ## Authors
 
