@@ -55,11 +55,11 @@ RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
      apt install -y \
+      openssh-server \
       task \
-      zsh \
       tmux \
       vim-nox \
-      openssh-server
+      zsh
 
 # Set up custom configuration for zsh
 RUN chsh -s /usr/bin/zsh && \
@@ -67,11 +67,15 @@ RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
-# Fetch and source personal dotfiles
+# Setup dotfiles
 RUN git clone https://github.com/bluebrown/dotfiles.git  ~/dotfiles && \
     /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
-    mv ~/dotfiles/gitconfig ~/.gitconfig
-    
+     mv ~/dotfiles/gitconfig ~/.gitconfig
+
+# Install vim plugins
+RUN vim -c 'PlugInstall'\
+        -c 'qa'
+
 # Set the workdir to quick pull go repos
 WORKDIR /go/src/github.com/bluebrown/
 
