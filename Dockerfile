@@ -66,7 +66,7 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 COPY ./dotfiles /root/dotfiles
 RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
     mv ~/dotfiles/gitconfig ~/.gitconfig && \
-    mv ~/dotfiles/xterm-256color-italic.terminfo ~/ && \
+    mv ~/dotfiles/xterm-256color-italic.terminfo ~/xterm-256color-itlaic.terminfo && \
     tic ~/xterm-256color-italic.terminfo
 
 # Set environment variables
