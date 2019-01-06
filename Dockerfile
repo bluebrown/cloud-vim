@@ -72,7 +72,7 @@ RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
 # Set environment variables
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
-    TERM=xterm-256color-italic\
+    TERM=xterm-256color-italic \
     TASKRC=~/dotfiles/taskrc
 
 WORKDIR /go/src/github.com/bluebrown/
