@@ -67,7 +67,7 @@ COPY ./dotfiles /root/dotfiles
 RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
     mv ~/dotfiles/gitconfig ~/.gitconfig && \
     mv ~/dotfiles/xterm-256color-italic.terminfo ~/ && \
-    tic /root/xterm-256color-italic.terminfo
+    tic ~/xterm-256color-italic.terminfo
 
 # Set environment variables
 ENV \
