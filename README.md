@@ -11,14 +11,12 @@ Sometimes it can also be usefull to pull this image into a playground, in the we
 
 It is as easy as spinning a container up, ssh into it, clone a git repo, edit some code and commit. Afterwards the whole container can get thrown away as the code persists in your repository.
 
-
 ## Getting Started
 You can pull the image or clone the repo
 ```
 docker pull bluebrown/cloud-vim
 git clone https://github.com/bluebrown/cloud-vim.git
 ```
-
 ### Prerequisites
 
 If you want to use this image locally you need to have docker installed. Otherwise you need a cloud provider or a server with docker engine to invoke your service at all times remotely.
@@ -29,24 +27,15 @@ You can simply use something like https://labs.play-with-docker.com/ to pull the
 
 ```
 docker pull bluebrown/cloud-vim
-docker run -ti bluebrown/cloud-vim /bin/zsh
+docker run -ti bluebrown/cloud-vim
 ```
-
-## Development
-To build this image youself with own configurations pull this repo
+## Connection over ssh
+Once you have a container of this immage somewhere deployed, you can ssh into it to code from anywhere!
 ```
-git clone https://github.com/bluebrown/cloud-vim.git
+ssh https://<container-ip>
 ```
-Within the dockerfile is a repository url specified which points to a collection of dotfiles.
-You might fork and change these and update the url in the dockerfile https://github.com/bluebrown/dotfiles
-
-```
-git clone https://github.com/<yourname>/dotfiles.git
-```
-After changing the files to your need you can build you own image
-```
-docker build -t <yourname>/cloud-vim .
-```
+## Embeded
+You can also build a web frontend and embed to container sdt in & output.
 
 ## Authors
 
