@@ -77,8 +77,7 @@ ENV \
   NAME=nicobraun \
   USER=bluebrown \
   EMAIL=nico-braun@live.de \
-  TASKRC=~/dotfiles/taskrc \
-  VIM=~/dotfiles/vimrc
+  TASKRC=~/dotfiles/taskrc
 
 RUN git config --global user.name $NAME && \
     git config --global user.mail $EMAIL && \
