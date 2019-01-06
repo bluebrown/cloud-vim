@@ -61,14 +61,6 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
     vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc
 
-# Copy the configuration files
-# Remember to check for updates in git submodule
-COPY ./dotfiles /root/dotfiles
-RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
-    mv ~/dotfiles/gitconfig ~/.gitconfig && \
-    mv ~/dotfiles/xterm-256color-italic.terminfo ~/xterm-256color-itlaic.terminfo && \
-    tic ~/xterm-256color-italic.terminfo
-
 # Set environment variables
 ENV \
   LANG=C.UTF-8 \
@@ -78,6 +70,14 @@ ENV \
   USER=bluebrown \
   EMAIL=nico-braun@live.de \
   TASKRC=~/dotfiles/taskrc
+
+# Copy the configuration files
+# Remember to check for updates in git submodule
+COPY ./dotfiles /root/dotfiles
+RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
+    mv ~/dotfiles/gitconfig ~/.gitconfig && \
+    mv ~/dotfiles/xterm-256color-italic.terminfo ~/xterm-256color-itlaic.terminfo && \
+    tic ~/xterm-256color-italic.terminfo
 
 RUN git config --global user.name $NAME && \
     git config --global user.mail $EMAIL && \
