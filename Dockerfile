@@ -62,25 +62,32 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
     vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc
 
-# Copy the configuration files
-# Remember to check for updates in git submodule
-COPY ./dotfiles /root/dotfiles
-RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
-    mv ~/dotfiles/gitconfig ~/.gitconfig
-
-# Set enviroment
+# Set enviroment - Note that It is done in multiple steps
+# because elsewise we can not point to other env vars
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
     NAME=nicobraun \
     USER=bluebrown \
     EMAIL=nico-braun@live.de \
-    TASKRC=~/dotfiles/taskrc
+    TASKRC=/root/dotfiles/taskrc
 
-RUN git config --global user.name $NAME && \
+# Copy the configuration files
+# Remember to check for updates in git submodule
+COPY ./dotfiles /root/dotfiles
+RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
+    mv /root/dotfiles/gitconfig /root/.gitconfig && \
+    git config --global user.name $NAME && \
     git config --global user.mail $EMAIL && \
     git config --global user.username $USER
 
+# Make italics work in tmux
+# Currently top layer for better caching, as its in a working state
+RUN mv /root/dotfiles/xterm-256color-italic.terminfo /root/ && \
+    tic /root/xterm-256color-italic.terminfo && \
+    export TERM=xterm-256color-italic
+ENV TERM=xterm-256color-italic
+
 # Workdir for go projects
-WORKDIR /go/src/github.com/$USER/
+WORKDIR /go/src/github.com/$USER
 CMD ["zsh"]
 
