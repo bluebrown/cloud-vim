@@ -49,13 +49,13 @@ RUN apt update && apt install -y \
       vim-nox \
       zsh
 
-# Setup zsh
+# Setup zsh & install plugins
 RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh && \
     git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
-# Setup Vim
+# Setup Vim with Vim Plug & install plugins
 COPY ./dotfiles/vimrc /root/.vim/vimrc
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
@@ -66,16 +66,28 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 COPY ./dotfiles /root/dotfiles
 RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
     mv ~/dotfiles/gitconfig ~/.gitconfig && \
+    #Tmux requirement
     mv ~/dotfiles/xterm-256color-italic.terminfo /root/ && \
     tic /root/xterm-256color-italic.terminfo
 
 # Set environment variables
-ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8 \
-    TERM=xterm-256color-italic \
-    TASKRC=~/dotfiles/taskrc
+ENV \
+  # Basic
+  LANG=C.UTF-8 \
+  LC_ALL=C.UTF-8 \
+  TERM=xterm-256color-italic \
+  #Personal data for git
+  NAME=nicobraun \
+  USER=bluebrown \
+  EMAIL=nico-braun@live.de \
+  #Tools
+  TASKRC=~/dotfiles/taskrc
 
-WORKDIR /go/src/github.com/bluebrown/
+RUN git config --global user.name $NAME && \
+    git config --global user.mail $EMAIL && \
+    git config --global user.username $USER
 
+# Workdir for go projects
+WORKDIR /go/src/github.com/$USER/
 CMD ["zsh"]
 
