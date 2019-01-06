@@ -27,34 +27,21 @@ RUN go get -u -v \
 FROM golang
 
 # Copy the compiled go tools from the builder image
-# Required for vim go
+# Vim-Go  dependencies
 COPY --from=builder /go/bin /go/bin/
 
-# Set language enviroment, requierd for tmux
-ENV LANG C.UTF-8
-ENV LC_ALL C.UTF-8
-
-# Enable advanced colors and italic fonts
-COPY xterm-256color-italic.terminfo /root
-RUN tic /root/xterm-256color-italic.terminfo
-ENV TERM=xterm-256color-italic
-
-# Install docker depenencies & docker
+# Docker dependencies
 RUN apt update &&  apt install -y  \
-  apt-transport-https \
-  ca-certificates gnupg2 \
-  software-properties-common
-
-# Install docker
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+      apt-transport-https \
+      ca-certificates gnupg2 \
+      software-properties-common && \
+      curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository -y \
-      "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable""" && \
-    apt update && apt install -y docker-ce
+      "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"""
 
-# Install common tools
-RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-     apt install -y \
+# Install Core Tools
+RUN apt update && apt install -y \
+      docker-ce \
       golang-glide \
       openssh-server \
       task \
@@ -62,27 +49,33 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       vim-nox \
       zsh
 
-# Set up custom configuration for zsh
+# Setup zsh
 RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh && \
     git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
+# Setup Vim
+COPY ./dotfiles/vimrc /root/.vim/vimrc
+RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
+    vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc
 
 # Copy the configuration files
 # Remember to check for updates in git submodule
 COPY ./dotfiles /root/dotfiles
-
-# Setup
 RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
-     mv ~/dotfiles/gitconfig ~/.gitconfig &&\
-     vim -c 'PlugInstall --sync' \
-         -c 'qa!'
+    mv ~/dotfiles/gitconfig ~/.gitconfig && \
+    mv ~/dotfiles/xterm-256color-italic.terminfo /root/ && \
+    tic /root/xterm-256color-italic.terminfo
 
-# Set the workdir to quick pull go repos
+# Set environment variables
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    TERM=xterm-256color-italic\
+    TASKRC=~/dotfiles/taskrc
+
 WORKDIR /go/src/github.com/bluebrown/
 
-# Expose port
-EXPOSE 22
-
 CMD ["zsh"]
+
