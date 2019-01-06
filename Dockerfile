@@ -2,7 +2,7 @@
 FROM golang as builder
 
 # Get and compile the go tools
-RUN go get -u -v \
+RUN go get -u \
   github.com/klauspost/asmfmt/cmd/asmfmt \
   github.com/derekparker/delve/cmd/dlv \
   github.com/kisielk/errcheck \
@@ -30,16 +30,16 @@ FROM golang
 # Vim-Go  dependencies
 COPY --from=builder /go/bin /go/bin/
 
-# Docker dependencies
+# Dependecies
 RUN apt update &&  apt install -y  \
       apt-transport-https \
       ca-certificates gnupg2 \
       software-properties-common && \
-      curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
+    curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository -y \
       "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"""
 
-# Install Core Tools
+# Tools
 RUN apt update && apt install -y \
       docker-ce \
       golang-glide \
@@ -57,7 +57,7 @@ RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
 # Setup Vim with Vim Plug & install plugins
-COPY ./dotfiles/vimrc /root/.vim/vimrc
+COPY ./dotfiles/vimrc /root/.vim/
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
     vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc
@@ -72,8 +72,9 @@ ENV LANG=C.UTF-8 \
     TASKRC=/root/dotfiles/taskrc
 
 # Copy the configuration files
-# Remember to check for updates in git submodule
 COPY ./dotfiles /root/dotfiles
+
+# Remember to check for updates in git submodule
 RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
     mv /root/dotfiles/gitconfig /root/.gitconfig && \
     git config --global user.name $NAME && \
@@ -83,8 +84,7 @@ RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
 # Make italics work in tmux
 # Currently top layer for better caching, as its in a working state
 RUN mv /root/dotfiles/xterm-256color-italic.terminfo /root/ && \
-    tic /root/xterm-256color-italic.terminfo && \
-    export TERM=xterm-256color-italic
+    tic /root/xterm-256color-italic.terminfo
 ENV TERM=xterm-256color-italic
 
 # Workdir for go projects

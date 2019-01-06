@@ -2,8 +2,8 @@ version: "3.4"
 
 services:
   ide:
-    image: bluebrown/cloud-vim
+    image: test
     volumes:
       - ./workspace:/go/src/github.com/bluebrown/
-    ports:
-      - 9000:9000
+      - ./workspace/tasks:/root/.task/
+      - /var/run/docker.sock:/var/run/docker.sock
