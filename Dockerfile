@@ -66,22 +66,19 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 COPY ./dotfiles /root/dotfiles
 RUN /bin/bash -c "source ~/dotfiles/fiddle.sh" && \
     mv ~/dotfiles/gitconfig ~/.gitconfig && \
-    #Tmux requirement
     mv ~/dotfiles/xterm-256color-italic.terminfo /root/ && \
     tic /root/xterm-256color-italic.terminfo
 
 # Set environment variables
 ENV \
-  # Basic
   LANG=C.UTF-8 \
   LC_ALL=C.UTF-8 \
   TERM=xterm-256color-italic \
-  #Personal data for git
   NAME=nicobraun \
   USER=bluebrown \
   EMAIL=nico-braun@live.de \
-  #Tools
-  TASKRC=~/dotfiles/taskrc
+  TASKRC=~/dotfiles/taskrc \
+  VIM=~/dotfiles/vimrc
 
 RUN git config --global user.name $NAME && \
     git config --global user.mail $EMAIL && \
