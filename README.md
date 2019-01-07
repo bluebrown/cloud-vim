@@ -51,7 +51,7 @@ ssh root@localhost -p 49154 (The password is `root)
 If you are making the container accessible from the internet you'll probably want to secure it bit. You can do one of the following two things after launching the container:
 
 * Change the root password: `docker exec -ti test_sshd passwd`
-* Don't allow passwords at all, use keys instead:
+* **Don't allow passwords at all, use keys instead:**
 ```
 docker exec test_sshd passwd -d root
 docker cp file_on_host_with_allowed_public_keys test_sshd:/root/.ssh/authorized_keys
