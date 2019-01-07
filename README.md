@@ -69,7 +69,7 @@ docker container ls
 ```
 Spin up a sibling instance
 ```
-docker run  --name sibling -P -d --rm bluebrown/cloud-vim
+docker run --name sibling -P -d --rm bluebrown/cloud-vim
 ```
 Take a look at the siblings
 ```
