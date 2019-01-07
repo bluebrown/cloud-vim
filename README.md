@@ -5,7 +5,7 @@ IDE style combination of tools baked into a docker image:
 * Support for many programming & scripting languages such as
   - **c, go, docker, lua, graphql, js & jsx, python** *and many more* 
 
-The purpose of this project is to provide a highly accessible IDE, with low requirements. Deploy an instance of this image, exec or ssh into it and start conding / pair coding.
+The purpose of this project is to provide a highly accessible IDE, with low requirements. Deploy an instance of this image, exec or ssh into it and start coding / pair coding.
 
 It is as easy as cloning or initializing a git repo, edit some code with all the goodies of an IDE, and commit at the end of your session.
 
@@ -28,11 +28,11 @@ docker run -d --name cloud-vim-ssh bluebrown/cloud-vim
 
 ### Prerequisites
 
-If you want to use this image locally you need to have docker installed. Otherwise you need a cloud provider or a server with docker engine to invoke your service at all times remotely.
+If you want to use this image locally you need to have docker installed. Otherwise, you need a cloud provider or a server with docker engine to invoke your service at all times remotely.
 
-### No Prequisites Solution 
+### No Perquisites Solution 
 
-You can simply use something like https://labs.play-with-docker.com/ to pull the image and spin up a quick throw-away IDE without any prequisites other than a web browser with internet connection.
+You can simply use something like https://labs.play-with-docker.com/ to pull the image and spin up a quick throw-away IDE without any perquisites other than a web browser with internet connection.
 
 
 ## Connection over ssh
@@ -74,4 +74,3 @@ docker image ls
 * **Nico Braun** - *Initial work* - [bluebrown](https://github.com/bluebrown)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
