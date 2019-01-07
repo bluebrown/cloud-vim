@@ -3,7 +3,7 @@
 IDE style combination of tools baked into a docker image:
 * **docker-ce, openssh-server, tmux, vim & zsh**
 * Support for many programming & scripting languages such as
-  - **c, go, docker, lua, graphql, js & jsx, python** *and many more* 
+  - **c, go, docker, lua, graphql, javascript, jsx, python** *and many more* 
 
 The purpose of this project is to provide a highly accessible IDE, with low requirements. Deploy an instance of this image, exec or ssh into it and start coding / pair coding.
 
