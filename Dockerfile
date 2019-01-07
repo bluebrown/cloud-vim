@@ -59,8 +59,6 @@ RUN mkdir /var/run/sshd && \
     mkdir /root/.ssh && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-EXPOSE 22
-
 # Setup zsh & install plugins
 RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh && \
@@ -100,6 +98,9 @@ ENV TERM=xterm-256color-italic
 
 # Workdir for go projects
 WORKDIR /go/src/github.com/$USER
+
+# Expost tcp port for ssh
+EXPOSE 22
 
 # Start sshd as default command
 CMD ["/usr/sbin/sshd", "-D"]
