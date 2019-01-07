@@ -16,11 +16,11 @@ It is as easy as spinning a container up, ssh into it, clone a git repo, edit so
 ```
 docker pull bluebrown/cloud-vim
 ```
-* Run it Locally 
+* run it locally 
 ```
 docker run -ti --name cloud-vim bluebrown/cloud-vim /bin/zsh
 ```
-* Or Start as ssh server:
+* or Start as ssh server:
 ```
 docker run -d --name cloud-vim-ssh bluebrown/cloud-vim
 ```
