@@ -12,15 +12,15 @@ Sometimes it can also be usefull to pull this image into a playground, in the we
 It is as easy as spinning a container up, ssh into it, clone a git repo, edit some code and commit. Afterwards the whole container can get thrown away as the code persists in your repository.
 
 ## Getting Started
-Pull the image
+* Pull the image
 ```
 docker pull bluebrown/cloud-vim
 ```
-Run it Locally 
+* Run it Locally 
 ```
 docker run -ti --name cloud-vim bluebrown/cloud-vim /bin/zsh
 ```
-Or Start as ssh server:
+* Or Start as ssh server:
 ```
 docker run -d --name cloud-vim-ssh bluebrown/cloud-vim
 ```
@@ -34,7 +34,7 @@ You can simply use something like https://labs.play-with-docker.com/ to pull the
 
 
 ## Connection over ssh
-Once you have a container of this immage somewhere deployed, you can ssh into it to code from anywhere!
+Once you have an instance of this image run and started the openssh-server, you can ssh into it to code from anywhere!
 
 ### Run Example
 ```
