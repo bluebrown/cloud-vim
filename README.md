@@ -12,15 +12,15 @@ It is as easy as cloning or initializing a git repo, edit some code with all the
 
 ## Getting Started
 
-* **Pull the image**
+* Pull the image
 ```
 docker pull bluebrown/cloud-vim
 ```
-* **run it locally** 
+* run it locally 
 ```
 docker run -ti --name cloud-vim bluebrown/cloud-vim /bin/zsh
 ```
-* **or start as ssh server**
+* or start as ssh server
 ```
 docker run -d --name cloud-vim-ssh bluebrown/cloud-vim
 ```
@@ -64,7 +64,7 @@ This image contains Docker-CE out of the box. You can simply expose the host soc
 docker run -v /var/run/docker.sock:/var/run/docker.sock \
            --name cv-child -P -ti bluebrown/cloud-vim /bin/zsh
 ```
-Veyfy that you can access the socket
+Verify that you can access the socket
 ```
 docker container ls
 ```
