@@ -6,7 +6,7 @@ IDE style combination of tools baked into a docker image:
 
 The purpose of this project is to provide a highly accessible IDE, with low requirements. Deploy an instance of this image, exec or ssh into it and start coding / pair coding.
 
-It is as easy as cloning or initializing a git repo, edit some code with all the goodies of an IDE, and commit at the end of your session.
+It is as easy as cloning or initializing a git repository, edit some code with all the goodies of an IDE, and commit at the end of your session.
 
 
 ## Getting Started
@@ -69,7 +69,7 @@ docker container ls
 ```
 Spin up a sibling instance
 ```
-run  -d -P --rm --name sibling bluebrown/cloud-vim
+run -d  --name sibling  -P --rm  bluebrown/cloud-vim
 ```
 Take a look at the siblings
 ```
