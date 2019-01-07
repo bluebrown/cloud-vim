@@ -87,7 +87,19 @@ RUN mv /root/dotfiles/xterm-256color-italic.terminfo /root/ && \
     tic /root/xterm-256color-italic.terminfo
 ENV TERM=xterm-256color-italic
 
+# Configure ssh server
+RUN mkdir /var/run/sshd && \
+    echo 'root:root' | chpasswd && \
+    sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
+    mkdir /root/.ssh && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EXPOSE 22
+
 # Workdir for go projects
 WORKDIR /go/src/github.com/$USER
+
 CMD ["zsh"]
 
