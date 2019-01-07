@@ -1,7 +1,7 @@
 # Cloud VIM
 
 IDE style combination of tools baked into a docker image:
-* **docker-ce, openssh-server, tmux, VIM & zsh**
+* **docker-ce, openssh-server, tmux, vim & zsh**
 * Support for many programming & scripting languages such as
   - **c, go, docker, lua, graphql, js & jsx, python** *and many more* 
 
