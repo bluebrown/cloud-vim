@@ -1,8 +1,10 @@
 # Cloud VIM
 
-IDE style VIM configuration in a docker container with built-in docker-ce and openssh-server.
-
-![alt text](https://www.tintri.com/sites/default/files/paragraph-images/Tintri-containers-support-blog.jpg)
+IDE style combination of tools baked into a docker image:
+* docker-ce, openssh-server, tmux, VIM & zsh - all pre configured
+* Focus on Golang with vim-go and go tools pre installed
+* Support for many other languages such as
+ *docker, lua, graphql, js & jsx, python and many more* 
 
 The purpose of this project is to provide a highly accessible IDE, with low requirements. Deploy an instance of this image, exec or ssh into it and start conding / pair coding.
 
