@@ -80,10 +80,8 @@ ENV LANG=C.UTF-8 \
     EMAIL=nico-braun@live.de \
     TASKRC=/root/dotfiles/taskrc
 
-# Copy the configuration files
+# Setup the configuration files
 COPY ./dotfiles /root/dotfiles
-
-# Remember to check for updates in git submodule
 RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
     mv /root/dotfiles/gitconfig /root/.gitconfig && \
     git config --global user.name $NAME && \
@@ -101,8 +99,7 @@ WORKDIR /go/src/github.com/$USER
 
 # Expost tcp port for ssh
 EXPOSE 22
-
-# Start sshd as default command
+# and start sshd server
 CMD ["/usr/sbin/sshd", "-D"]
 
 
