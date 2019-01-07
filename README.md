@@ -60,6 +60,16 @@ docker cp file_on_host_with_allowed_public_keys test_sshd:/root/.ssh/authorized_
 docker exec test_sshd chown root:root /root/.ssh/authorized_keys
 ```
 
+##  Docker inside Docker
+This image contains Docker-CE out of the box. You can simply expose the host socket in a volume and use it from inside the running container
+```
+docker run -v /var/run/docker.sock /var/run/docker.sock \
+           -ti --name cloud-vim bluebrown/cloud-vim /bin/zsh
+```
+Veyfy that you can access the socket
+```
+docker image ls
+```
 
 ## Authors
 
