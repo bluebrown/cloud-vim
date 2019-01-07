@@ -1,6 +1,6 @@
 # Cloud VIM
 
-IDE style VIM configuration in a docker container with built-in docker engine and ssh server.
+IDE style VIM configuration in a docker container with built-in docker-ce and openssh-server.
 
 ![alt text](https://www.tintri.com/sites/default/files/paragraph-images/Tintri-containers-support-blog.jpg)
 
