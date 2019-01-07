@@ -62,7 +62,7 @@ docker exec test_sshd chown root:root /root/.ssh/authorized_keys
 This image contains Docker-CE out of the box. You can simply expose the host socket in a volume and use it from inside the running container
 ```
 docker run -v /var/run/docker.sock:/var/run/docker.sock \
-           --name cv-child -P -ti bluebrown/cloud-vim /bin/zsh
+           --name child -P -ti --rm bluebrown/cloud-vim /bin/zsh
 ```
 Verify that you can access the socket
 ```
@@ -70,9 +70,9 @@ docker container ls
 ```
 Spin up a sibling instance
 ```
-run -d -P --name cv-sibling bluebrown/cloud-vim
+run  -d -P --rm --name sibling bluebrown/cloud-vim
 ```
-Take a look at the sibling container
+Take a look at the siblings
 ```
 docker container ls
 ```
