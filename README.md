@@ -12,10 +12,17 @@ Sometimes it can also be usefull to pull this image into a playground, in the we
 It is as easy as spinning a container up, ssh into it, clone a git repo, edit some code and commit. Afterwards the whole container can get thrown away as the code persists in your repository.
 
 ## Getting Started
-You can pull the image or clone the repo
+Pull the image
 ```
 docker pull bluebrown/cloud-vim
-git clone https://github.com/bluebrown/cloud-vim.git
+```
+Run it Locally 
+```
+docker run -ti --name cloud-vim bluebrown/cloud-vim /bin/zsh
+```
+Or Start as ssh server:
+```
+docker run -d --name cloud-vim-ssh bluebrown/cloud-vim
 ```
 ### Prerequisites
 
@@ -25,17 +32,29 @@ If you want to use this image locally you need to have docker installed. Otherwi
 
 You can simply use something like https://labs.play-with-docker.com/ to pull the image and spin up a quick throw-away IDE without any prequisites other than a web browser with internet connection.
 
-```
-docker pull bluebrown/cloud-vim
-docker run -ti bluebrown/cloud-vim
-```
+
 ## Connection over ssh
 Once you have a container of this immage somewhere deployed, you can ssh into it to code from anywhere!
+
+### Run Example
 ```
-ssh https://<container-ip>
+docker run -d -P --name test_sshd bluebrown/cloud-vim
+docker port test_sshd 22
+> 0.0.0.0:49154
+
+ssh root@localhost -p 49154 (The password is `root)
+> root@test_sshd $
 ```
-## Embeded
-You can also build a web frontend and embed to container sdt in & output.
+### Security
+If you are making the container accessible from the internet you'll probably want to secure it bit. You can do one of the following two things after launching the container:
+
+* Change the root password: `docker exec -ti test_sshd passwd`
+* Don't allow passwords at all, use keys instead:
+```
+docker exec test_sshd passwd -d root
+docker cp file_on_host_with_allowed_public_keys test_sshd:/root/.ssh/authorized_keys
+docker exec test_sshd chown root:root /root/.ssh/authorized_keys
+```
 
 ## Authors
 
