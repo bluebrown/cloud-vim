@@ -22,7 +22,7 @@ docker pull bluebrown/cloud-vim
 ```
 docker run -ti --name cloud-vim bluebrown/cloud-vim /bin/zsh
 ```
-* **or Start as ssh server**
+* **or start as ssh server**
 ```
 docker run -d --name cloud-vim-ssh bluebrown/cloud-vim
 ```
