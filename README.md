@@ -11,19 +11,23 @@ Sometimes it can also be usefull to pull this image into a playground, in the we
 
 It is as easy as spinning a container up, ssh into it, clone a git repo, edit some code and commit. Afterwards the whole container can get thrown away as the code persists in your repository.
 
+
 ## Getting Started
-* Pull the image
+
+* **Pull the image**
 ```
 docker pull bluebrown/cloud-vim
 ```
-* run it locally 
+* **run it locally** 
 ```
 docker run -ti --name cloud-vim bluebrown/cloud-vim /bin/zsh
 ```
-* or Start as ssh server:
+* **or Start as ssh server**
 ```
 docker run -d --name cloud-vim-ssh bluebrown/cloud-vim
 ```
+
+
 ### Prerequisites
 
 If you want to use this image locally you need to have docker installed. Otherwise you need a cloud provider or a server with docker engine to invoke your service at all times remotely.
@@ -55,6 +59,7 @@ docker exec test_sshd passwd -d root
 docker cp file_on_host_with_allowed_public_keys test_sshd:/root/.ssh/authorized_keys
 docker exec test_sshd chown root:root /root/.ssh/authorized_keys
 ```
+
 
 ## Authors
 
