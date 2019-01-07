@@ -36,7 +36,7 @@ You can simply use something like https://labs.play-with-docker.com/ to pull the
 
 
 ## Connection over ssh
-Once you have an instance of this image run and started the openssh-server, you can ssh into it to code from anywhere!
+Once you have an instance of this image run and started the openssh-server, you can ssh into it, and code from anywhere!
 
 ### Run Example
 ```
