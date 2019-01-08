@@ -2,7 +2,7 @@
 FROM golang as builder
 
 # Get and compile the go tools
-RUN go get -u \
+RUN go get -u -v \
   github.com/klauspost/asmfmt/cmd/asmfmt \
   github.com/derekparker/delve/cmd/dlv \
   github.com/kisielk/errcheck \
@@ -26,7 +26,6 @@ RUN go get -u \
 # The Actual Image
 FROM golang
 
-# Copy the compiled go tools from the builder image
 # Vim-Go  dependencies
 COPY --from=builder /go/bin /go/bin/
 
@@ -37,7 +36,8 @@ RUN apt update &&  apt install -y  \
       software-properties-common && \
     curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
     add-apt-repository -y \
-      "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"""
+      "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable""" && \
+    apt clean
 
 # Tools
 RUN apt update && apt install -y \
@@ -51,55 +51,54 @@ RUN apt update && apt install -y \
       zsh && \
       apt clean
 
-# Configure ssh server
-RUN mkdir /var/run/sshd && \
-    echo 'root:root' | chpasswd && \
-    sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
-    mkdir /root/.ssh && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 # Setup zsh & install plugins
 RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh && \
     git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions && \
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting && \
+    apt clean
 
 # Setup Vim with Vim Plug & install plugins
 COPY ./dotfiles/vimrc /root/.vim/
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
-    vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc
+    vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc && \
+    apt clean
 
-# Set enviroment - Note that It is done in multiple steps
-# because elsewise we can not point to other env vars
+# Set enviroment
 ENV LANG=C.UTF-8 \
     LC_ALL=C.UTF-8 \
+    TZ=Europe/Madrid \
+    TERM=xterm-256color-italic \
+    TASKRC=/root/dotfiles/taskrc \
     NAME=nicobraun \
     USER=bluebrown \
-    EMAIL=nico-braun@live.de \
-    TASKRC=/root/dotfiles/taskrc
+    EMAIL=nico-braun@live.de
 
-# Setup the configuration files
+# Get the dotfiles
 COPY ./dotfiles /root/dotfiles
+
+# Configuration layer
 RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
     mv /root/dotfiles/gitconfig /root/.gitconfig && \
     git config --global user.name $NAME && \
     git config --global user.mail $EMAIL && \
-    git config --global user.username $USER
-
-# Make italics work in tmux
-# Currently top layer for better caching, as its in a working state
-RUN mv /root/dotfiles/xterm-256color-italic.terminfo /root/ && \
-    tic /root/xterm-256color-italic.terminfo
-ENV TERM=xterm-256color-italic
+    git config --global user.username $USER && \
+    # Configure ssh server
+    mkdir /var/run/sshd && \
+    echo 'root:root' | chpasswd && \
+    sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
+    mkdir /root/.ssh && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    apt clean
 
 # Workdir for go projects
 WORKDIR /go/src/github.com/$USER
 
 # Expost tcp port for ssh
 EXPOSE 22
-# and start sshd server
-CMD ["/usr/sbin/sshd", "-D"]
 
+# Start sshd server
+CMD ["/usr/sbin/sshd", "-D"]
 
