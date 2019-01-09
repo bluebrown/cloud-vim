@@ -49,37 +49,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       vim-nox \
       zsh
 
-# Setup zsh & install plugins
+# Install zsh plugins
 RUN chsh -s /usr/bin/zsh && \
     git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh && \
     git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/plugins/zsh-autosuggestions && \
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/plugins/zsh-syntax-highlighting
 
-# Setup Vim with Vim Plug & install plugins
+# Install vim plugins
 COPY ./dotfiles/vimrc /root/.vim/
 RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
     vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc
 
-# Set enviroment
-ENV LANG=C.UTF-8 \
-    LC_ALL=C.UTF-8 \
-    TZ=Europe/Madrid \
-    TERM=xterm-256color-italic \
-    TASKRC=/root/dotfiles/taskrc \
-    NAME=nicobraun \
-    USER=bluebrown \
-    EMAIL=nico-braun@live.de
-
 # Get the dotfiles
 COPY ./dotfiles /root/dotfiles
 
-# Configuration layer
+# Apply personal configuration
 RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
     mv /root/dotfiles/gitconfig /root/.gitconfig && \
-    git config --global user.name $NAME && \
-    git config --global user.mail $EMAIL && \
-    git config --global user.username $USER && \
+    git config --global user.name "nico braun" && \
+    git config --global user.mail nico-braun@live.de && \
+    git config --global user.username bluebrown && \
     # Configure ssh server
     mkdir /var/run/sshd && \
     echo 'root:root' | chpasswd && \
@@ -87,12 +77,17 @@ RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
     sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
     mkdir /root/.ssh
 
-# Workdir for go projects
-WORKDIR /go/src/github.com/$USER
+# Set enviroment
+ENV LANG=C.UTF-8 \
+    LC_ALL=C.UTF-8 \
+    TZ=Europe/Madrid \
+    TERM=xterm-256color \
+    TASKRC=~/dotfiles/taskrc
+
+# Set run command to starting the sshd server
+CMD ["/usr/sbin/sshd", "-D"]
 
 # Expost tcp port for ssh
 EXPOSE 22
 
-# Start sshd server
-CMD ["/usr/sbin/sshd", "-D"]
 
