@@ -61,17 +61,8 @@ RUN curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim && \
     vim -c 'PlugInstall --sync' -c 'qa!' && rm /root/.vim/vimrc
 
-# Get the dotfiles
-COPY ./dotfiles /root/dotfiles
-
-# Apply personal configuration
-RUN /bin/bash -c "source /root/dotfiles/fiddle.sh" && \
-    mv /root/dotfiles/gitconfig /root/.gitconfig && \
-    git config --global user.name "nico braun" && \
-    git config --global user.mail nico-braun@live.de && \
-    git config --global user.username bluebrown && \
-    # Configure ssh server
-    mkdir /var/run/sshd && \
+# Configure ssh server
+RUN mkdir /var/run/sshd && \
     echo 'root:root' | chpasswd && \
     sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config && \
@@ -84,10 +75,15 @@ ENV LANG=C.UTF-8 \
     TERM=xterm-256color \
     TASKRC=~/dotfiles/taskrc
 
-# Set run command to starting the sshd server
-CMD ["/usr/sbin/sshd", "-D"]
-
 # Expost tcp port for ssh
 EXPOSE 22
+
+# Get the dotfiles
+COPY ./dotfiles /root/dotfiles
+
+RUN /bin/bash -c "/root/dotfiles/fiddle.sh -ztvwg -n bluebrown -m nico-braun@live.de"
+
+# Start sshd by default
+# CMD ["/usr/sbin/sshd", "-D"]
 
 
