@@ -1,3 +1,4 @@
 [submodule "dotfiles"]
 	path = dotfiles
 	url = https://github.com/bluebrown/dotfiles.git
+	branch = master
